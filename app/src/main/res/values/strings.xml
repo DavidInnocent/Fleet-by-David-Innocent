@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">fleet</string>
+
+    <string name="title_activity_choose_role">ChooseRole</string>
+    <string name="title_activity_near_by_drivers">Map</string>
+    <string name="title_activity_destination_chooser">Map</string>
+    <string name="choose_location">Choose Consignment Location</string>
+
+    <string name="choose_container">Choose Container Size</string>
+    <string-array name="container_size">
+        <item>20 Feet Container</item>
+        <item>40 Feet Container</item>
+    </string-array>
+    <string-array name="pickup_location">
+        <item>Nairobi Inland Port</item>
+        <item>Naivasha Inland Port</item>
+    </string-array>
+    <string name="title_activity_fleet_requests">Map</string>
+</resources>
