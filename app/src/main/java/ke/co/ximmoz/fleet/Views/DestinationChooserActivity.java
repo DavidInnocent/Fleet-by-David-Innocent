@@ -52,7 +52,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
     @OnClick(R.id.getMeATruck) void   finishConsignment(){
         consignment.setDestination_lat(markerOptions.getPosition().latitude);
         consignment.setDestination_lng(markerOptions.getPosition().longitude);
-        consignment.setStatus("notpaid");
+        consignment.setStatus("active");
         consignmentViewmodel= ViewModelProviders.of(DestinationChooserActivity.this).get(ConsignmentViewmodel.class);
         consignmentViewmodel.SaveConsignment(consignment).observe(DestinationChooserActivity.this, new Observer<String>() {
             @Override
@@ -109,11 +109,11 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
     }
 
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(DestinationChooserActivity.this,CargoOwnerActitivy.class));
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        startActivity(new Intent(DestinationChooserActivity.this,CargoOwnerActitivy.class));
+//        finish();
+//    }
 
     /**
      * Manipulates the map once available.
@@ -136,7 +136,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
                 mLocation=location;
                 LatLng currentPosition=new LatLng(location.getLatitude(),location.getLongitude());
                 mMap.addMarker(new MarkerOptions().title("You are here").position(currentPosition).snippet("Click anywhere in the map as a Destination for your Consignment"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,10));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,16));
 
 
             }

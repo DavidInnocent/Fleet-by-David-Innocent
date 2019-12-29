@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.content.Context;
@@ -28,8 +30,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
+import java.util.ArrayList;
+
+import ke.co.ximmoz.fleet.Models.Consignment;
 import ke.co.ximmoz.fleet.Models.MarkerClusters;
 import ke.co.ximmoz.fleet.R;
+import ke.co.ximmoz.fleet.Viewmodels.ConsignmentViewmodel;
 
 public class FleetRequestsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -38,11 +44,15 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location mLocation;
     LatLng currentPosition;
+    private Consignment consignment;
+    private ConsignmentViewmodel consignmentViewmodel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fleet_requests);
+        consignmentViewmodel= ViewModelProviders.of(FleetRequestsActivity.this).get(ConsignmentViewmodel.class);
         int PERMISSION_ALL=1;
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
         String[] PERMISSIONS={Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION};
@@ -86,8 +96,6 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         mMap = googleMap;
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.map_style));
         clustersClusterManager=new ClusterManager<>(this,mMap);
-
-
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -96,8 +104,8 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
                 mMap.setOnMarkerClickListener(clustersClusterManager);
                 currentPosition=new LatLng(location.getLatitude(),location.getLongitude());
                 mMap.addMarker(new MarkerOptions().title("You are here").position(currentPosition));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,10));
-                addItems(currentPosition);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,14));
+
 
             }
         });
@@ -120,18 +128,25 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         });
 
 
+        consignmentViewmodel.GetConsignments(consignment).observe(this, new Observer<Consignment>() {
+            @Override
+            public void onChanged(Consignment consignments) {
+                addItems(consignments);
+                }
+        });
+
     }
 
-    private void addItems(LatLng test) {
-        double lat=test.latitude+0.2,lng=test.longitude+0.2;
-        for(int i=0;i<5;i++)
-        {
-            double offset=i/600d;
-            lat=lat+offset;
-            lng=lng+offset;
-            MarkerClusters offsetItem=new MarkerClusters(new LatLng(lat,lng),"haha","Mark"+i,"hodsfjklsdjfksjfklsjfksjkflsdjklfjsdklfjsdljfklst");
-            clustersClusterManager.addItem(offsetItem);
-        }
+    private void addItems(Consignment consignmentReturned) {
+
+
+        LatLng points= new LatLng(consignmentReturned.getDestination_lat(),consignmentReturned.getDestination_lng());
+        MarkerClusters offsetItem=new MarkerClusters(points,"None","Pickup time","Delivery date:\n\n"+consignmentReturned.getDate_of_pickup());
+        clustersClusterManager.addItem(offsetItem);
+        clustersClusterManager.cluster();
+
+
+
 
     }
 }
