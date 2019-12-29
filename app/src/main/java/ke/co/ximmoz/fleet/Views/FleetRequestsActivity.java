@@ -45,7 +45,7 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         setContentView(R.layout.activity_fleet_requests);
         int PERMISSION_ALL=1;
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
-        String[] PERMISSIONS={Manifest.permission.ACCESS_FINE_LOCATION};
+        String[] PERMISSIONS={Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION};
 
         if(!hasPermissions(this,PERMISSIONS))
         {
@@ -95,8 +95,8 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
                 mMap.setOnCameraIdleListener(clustersClusterManager);
                 mMap.setOnMarkerClickListener(clustersClusterManager);
                 currentPosition=new LatLng(location.getLatitude(),location.getLongitude());
-                mMap.addMarker(new MarkerOptions().title("YOu are here").position(currentPosition));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,14));
+                mMap.addMarker(new MarkerOptions().title("You are here").position(currentPosition));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,10));
                 addItems(currentPosition);
 
             }

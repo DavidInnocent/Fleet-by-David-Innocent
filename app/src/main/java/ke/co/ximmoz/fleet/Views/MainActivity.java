@@ -34,6 +34,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.sql.Driver;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ke.co.ximmoz.fleet.Models.User;
 import ke.co.ximmoz.fleet.R;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initViewModel();
         // Configure Google Sign In
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
