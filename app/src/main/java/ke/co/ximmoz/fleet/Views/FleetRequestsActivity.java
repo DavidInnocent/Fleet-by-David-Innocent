@@ -16,10 +16,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -103,7 +107,12 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
                 mMap.setOnCameraIdleListener(clustersClusterManager);
                 mMap.setOnMarkerClickListener(clustersClusterManager);
                 currentPosition=new LatLng(location.getLatitude(),location.getLongitude());
-                mMap.addMarker(new MarkerOptions().title("You are here").position(currentPosition));
+
+                MarkerOptions opt=new MarkerOptions()
+                        .title("You are here")
+                        .position(currentPosition)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker));
+                mMap.addMarker(opt);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,14));
 
 
