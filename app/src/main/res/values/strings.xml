@@ -6,6 +6,11 @@
     <string name="title_activity_destination_chooser">Map</string>
     <string name="choose_location">Choose Consignment Location</string>
 
+    <string name="pickup_location">Choose Pickup Location</string>
+    <string name="drop_off_location">Choose Destination Location</string>
+    <string name="choose_date_of_pickup">Choose Pickup Date</string>
+
+
     <string name="choose_container">Choose Container Size</string>
     <string-array name="container_size">
         <item>20 Feet Container</item>
@@ -16,4 +21,9 @@
         <item>Naivasha Inland Port</item>
     </string-array>
     <string name="title_activity_fleet_requests">Map</string>
+    <string name="pickup_date">Choose Pickup Location</string>
+    <string name="finish">Finish</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -35,7 +35,6 @@
             android:name=".Views.FleetRequestsActivity"
             android:label="@string/title_activity_fleet_requests"></activity>
         <activity android:name=".Views.MakePaymentActivity" />
-        <activity android:name=".Views.DatePickerActivity" />
         <activity
             android:name=".Views.DestinationChooserActivity"
             android:label="@string/title_activity_destination_chooser" />

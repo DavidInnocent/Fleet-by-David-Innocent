@@ -28,8 +28,8 @@ public class ConsignmentActivity extends AppCompatActivity {
         consignment.setAmount(amountToPay.getText().toString());
         consignment.setContainer_size(containerSize.getSelectedItem().toString());
         consignment.setOwner(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        consignment.setPickup_location(spinner.getSelectedItem().toString());
-        Intent intent=new Intent(ConsignmentActivity.this,DatePickerActivity.class);
+        //consignment.setPickup_location(spinner.getSelectedItem().toString());
+        Intent intent=new Intent(ConsignmentActivity.this,DestinationChooserActivity.class);
         intent.putExtra("Consignment",consignment);
         startActivity(intent);
     }

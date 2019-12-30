@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
             } catch (Exception e) {
 
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                 return;
 
             }
@@ -81,9 +81,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                 }
                 Intent intent=new Intent(MainActivity.this,ChooseRole.class);
-                User userr=new User(firebaseUser.getDisplayName(),firebaseUser.getEmail(),firebaseUser.getUid(),"");
+                User userr=new User(firebaseUser.getDisplayName(),firebaseUser.getEmail(),firebaseUser.getUid(),firebaseUser.getPhoneNumber());
                 intent.putExtra("User",userr);
                 startActivity(intent);
+                finish();
 
             }
         });
