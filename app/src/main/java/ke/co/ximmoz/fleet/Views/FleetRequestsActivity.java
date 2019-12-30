@@ -131,7 +131,8 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         clustersClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MarkerClusters>() {
             @Override
             public boolean onClusterItemClick(MarkerClusters markerClusters) {
-                Toast.makeText(FleetRequestsActivity.this, markerClusters.getMarkerId(), Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(FleetRequestsActivity.this, markerClusters.getConsignment().getContainer_size(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -150,7 +151,7 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
 
 
         LatLng points= new LatLng(consignmentReturned.getDestination_lat(),consignmentReturned.getDestination_lng());
-        MarkerClusters offsetItem=new MarkerClusters(points,"None","Pickup time","Delivery date:\n\n"+consignmentReturned.getDate_of_pickup());
+        MarkerClusters offsetItem=new MarkerClusters(points,"None","Pickup time","Delivery date:\n\n"+consignmentReturned.getDate_of_pickup(),consignmentReturned);
         clustersClusterManager.addItem(offsetItem);
         clustersClusterManager.cluster();
 

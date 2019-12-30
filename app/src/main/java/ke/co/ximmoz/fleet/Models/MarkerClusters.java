@@ -11,13 +11,17 @@ public class MarkerClusters implements ClusterItem {
 
 
 
+    private final Consignment consignment;
+
+
     private final String snippet;
 
-    public MarkerClusters(LatLng positiond, String markerId, String title, String snippet) {
+    public MarkerClusters(LatLng positiond, String markerId, String title, String snippet,Consignment consignment) {
         this.positiond = positiond;
         this.markerId = markerId;
         this.title = title;
         this.snippet = snippet;
+        this.consignment=consignment;
     }
 
     @Override
@@ -37,5 +41,8 @@ public class MarkerClusters implements ClusterItem {
 
     public String getMarkerId() {
         return markerId;
+    }
+    public Consignment getConsignment() {
+        return consignment;
     }
 }
