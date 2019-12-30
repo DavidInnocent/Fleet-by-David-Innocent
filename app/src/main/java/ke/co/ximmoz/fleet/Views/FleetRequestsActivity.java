@@ -1,9 +1,10 @@
 package ke.co.ximmoz.fleet.Views;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,28 +17,21 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
-import java.util.ArrayList;
-
 import ke.co.ximmoz.fleet.Models.Consignment;
-import ke.co.ximmoz.fleet.Models.MarkerClusters;
+import ke.co.ximmoz.fleet.Views.Utils.ConsignmentDialog;
+import ke.co.ximmoz.fleet.Views.Utils.MarkerClusters;
 import ke.co.ximmoz.fleet.R;
 import ke.co.ximmoz.fleet.Viewmodels.ConsignmentViewmodel;
 
@@ -56,6 +50,8 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fleet_requests);
+
+
         consignmentViewmodel= ViewModelProviders.of(FleetRequestsActivity.this).get(ConsignmentViewmodel.class);
         int PERMISSION_ALL=1;
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
@@ -131,8 +127,15 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         clustersClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MarkerClusters>() {
             @Override
             public boolean onClusterItemClick(MarkerClusters markerClusters) {
-
-                Toast.makeText(FleetRequestsActivity.this, markerClusters.getConsignment().getContainer_size(), Toast.LENGTH_SHORT).show();
+                FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+                Fragment fragment=getSupportFragmentManager().findFragmentByTag("dialog");
+                if(fragment!=null)
+                {
+                    fragmentTransaction.remove(fragment);
+                }
+                fragmentTransaction.addToBackStack(null);
+                DialogFragment dialogFragment=new ConsignmentDialog();
+                dialogFragment.show(fragmentTransaction,"dialog");
                 return false;
             }
         });
@@ -151,7 +154,7 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
 
 
         LatLng points= new LatLng(consignmentReturned.getDestination_lat(),consignmentReturned.getDestination_lng());
-        MarkerClusters offsetItem=new MarkerClusters(points,"None","Pickup time","Delivery date:\n\n"+consignmentReturned.getDate_of_pickup(),consignmentReturned);
+        MarkerClusters offsetItem=new MarkerClusters(points,"None","Pickup time","Delivery date:"+consignmentReturned.getDate_of_pickup(),consignmentReturned);
         clustersClusterManager.addItem(offsetItem);
         clustersClusterManager.cluster();
 
