@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,11 +61,18 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
     TextView description;
     @BindView(R.id.cons)
     ConstraintLayout cons;
+    @BindView(R.id.goneConstraint)
+    ConstraintLayout goneConstraint;
+
+
+    @BindView(R.id.containerDimensions)
+    Spinner containerDimensions;
 
     private void   finishConsignment(View v){
         String buttonTexts=((Button)v).getText().toString();
         String PICKUP_LOCATION=getResources().getString(R.string.pickup_location);
         String DROP_OFF_LOCATION=getResources().getString(R.string.drop_off_location);
+        String CONTAINER=getResources().getString(R.string.choose_container);
 
             if(buttonTexts==(PICKUP_LOCATION))
             {
@@ -74,6 +82,11 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
             else if(buttonTexts==(DROP_OFF_LOCATION))
             {
                 GetDestinationLocation();
+                return;
+            }
+            else if(buttonTexts==CONTAINER)
+            {
+                GetContainer();
                 return;
             }
             else
@@ -87,6 +100,10 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
 
     }
 
+    private void GetContainer() {
+        SaveConsignment(consignment);
+    }
+
     private void GetPickupDate() {
 
         DialogFragment dialogFragment=new DatePickerFrag();
@@ -97,6 +114,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
         description.setText(getResources().getString(R.string.choose_container));
         confirmConsignment.setBackgroundResource(R.drawable.rounded_button);
         cons.setBackgroundResource(R.drawable.rounded_view);
+
     }
 
     private void GetDestinationLocation() {
@@ -104,8 +122,27 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
         consignment.setDestination_lng(markerOptions.getPosition().longitude);
         markerOptions.title("Delivery Address");
         markerOptions.snippet("Make sure to Zoom in for Accuracy");
-        confirmConsignment.setText(getResources().getString(R.string.choose_date_of_pickup));
-        description.setText(getResources().getString(R.string.choose_date_of_pickup));
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(DestinationChooserActivity.this)
+                .setIcon(R.mipmap.ic_launcher_round)
+                .setTitle("Destination Location Saved")
+                .setCancelable(false)
+                .setMessage("Choose Pickup Date")
+                .setPositiveButton("Pick A Date", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                        GetPickupDate();
+
+                    }
+                });
+
+        builder.show();
+
+
+        confirmConsignment.setText(getResources().getString(R.string.choose_container));
+        description.setText(getResources().getString(R.string.choose_container));
         confirmConsignment.setBackgroundResource(R.drawable.rounded_button);
         cons.setBackgroundResource(R.drawable.rounded_view);
     }
@@ -114,6 +151,21 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
         consignment.setPickup_location_lat(markerOptions.getPosition().latitude);
         consignment.setPickup_location_lng(markerOptions.getPosition().longitude);
         consignment.setStatus("active");
+        AlertDialog.Builder builder=new AlertDialog.Builder(DestinationChooserActivity.this)
+                .setIcon(R.mipmap.ic_launcher_round)
+                .setTitle("Pickup Location Saved")
+                .setCancelable(false)
+                .setMessage("Now Choose cargo destinatin Drop off Location")
+                .setPositiveButton("Choose Destination", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                });
+
+        builder.show();
         confirmConsignment.setText(getResources().getString(R.string.drop_off_location));
         confirmConsignment.setBackgroundResource(R.drawable.rounded_blue);
         description.setText(getResources().getString(R.string.drop_off_location));
@@ -124,6 +176,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
         mMap.addMarker(markerOptions);
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.map_style));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerOptions.getPosition(),14));
+
 
     }
 
@@ -142,15 +195,15 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
                 {
                     AlertDialog.Builder builder=new AlertDialog.Builder(DestinationChooserActivity.this)
                             .setIcon(R.mipmap.ic_launcher_round)
-                            .setTitle("Consignment Saved")
+                            .setTitle("Truck Request Saved")
                             .setCancelable(false)
-                            .setMessage("Would you like to pay 40% of the amount now?")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            .setMessage("Your truck request has been succesfully filed. Kindly be patient for your truck.")
+                            .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     dialog.dismiss();
-                                    Intent intent=new Intent(DestinationChooserActivity.this,MakePaymentActivity.class);
+                                    Intent intent=new Intent(DestinationChooserActivity.this,CargoOwnerActitivy.class);
                                     intent.putExtra("Consignment",consignment);
                                     startActivity(intent);
                                     finish();
@@ -261,7 +314,23 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
 
         String date= DateFormat.getDateInstance().format(calendar.getTime());
         consignment.setDate_of_pickup(date);
-        Toast.makeText(this, "Date set successfully", Toast.LENGTH_SHORT).show();
 
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(DestinationChooserActivity.this)
+                .setIcon(R.mipmap.ic_launcher_round)
+                .setTitle("Choose Container")
+                .setCancelable(false)
+                .setMessage("what knd of container looking for?")
+                .setPositiveButton("Choose Container", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                        goneConstraint.setVisibility(View.VISIBLE);
+
+                    }
+                });
+
+        builder.show();
     }
 }

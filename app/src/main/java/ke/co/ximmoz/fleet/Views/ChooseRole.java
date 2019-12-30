@@ -29,7 +29,7 @@ public class ChooseRole extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful())
                 {
-                    Intent intent=new Intent(ChooseRole.this,ConsignmentActivity.class);
+                    Intent intent=new Intent(ChooseRole.this,DestinationChooserActivity.class);
                     intent.putExtra("User",user);
                     startActivity(intent);
 
