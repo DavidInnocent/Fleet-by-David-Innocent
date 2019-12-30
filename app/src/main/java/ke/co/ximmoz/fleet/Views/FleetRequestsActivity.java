@@ -122,22 +122,27 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         clustersClusterManager.setOnClusterInfoWindowClickListener(new ClusterManager.OnClusterInfoWindowClickListener<MarkerClusters>() {
             @Override
             public void onClusterInfoWindowClick(Cluster<MarkerClusters> cluster) {
-                MarkerClusters marker=(MarkerClusters)cluster;
-                Toast.makeText(FleetRequestsActivity.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+
+                FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+                Fragment fragment=getSupportFragmentManager().findFragmentByTag("dialog");
+                for(MarkerClusters markerCluster:cluster.getItems())
+                {
+
+                    if(fragment!=null)
+                    {
+                        fragmentTransaction.remove(fragment);
+                    }
+                    fragmentTransaction.addToBackStack(null);
+                    DialogFragment dialogFragment=new ConsignmentDialog();
+                    dialogFragment.show(fragmentTransaction,"dialog");
+                    Toast.makeText(FleetRequestsActivity.this, markerCluster.getConsignment().getContainer_size(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         clustersClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MarkerClusters>() {
             @Override
             public boolean onClusterItemClick(MarkerClusters markerClusters) {
-                FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-                Fragment fragment=getSupportFragmentManager().findFragmentByTag("dialog");
-                if(fragment!=null)
-                {
-                    fragmentTransaction.remove(fragment);
-                }
-                fragmentTransaction.addToBackStack(null);
-                DialogFragment dialogFragment=new ConsignmentDialog();
-                dialogFragment.show(fragmentTransaction,"dialog");
+
                 return false;
             }
         });
