@@ -49,7 +49,7 @@ import static ke.co.ximmoz.fleet.Views.FleetRequestsActivity.hasPermissions;
 public class DestinationChooserActivity extends FragmentActivity implements OnMapReadyCallback, DatePickerDialog.OnDateSetListener {
 
     private GoogleMap mMap;
-    private static MarkerOptions markerOptions=new MarkerOptions();
+    private MarkerOptions markerOptions=new MarkerOptions();
     private Consignment consignment;
     private ConsignmentViewmodel consignmentViewmodel;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -101,6 +101,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
     }
 
     private void GetContainer() {
+        consignment.setContainer_size(containerDimensions.getSelectedItem().toString());
         SaveConsignment(consignment);
     }
 
@@ -119,7 +120,10 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
 
     private void GetDestinationLocation() {
         consignment.setDestination_lng(markerOptions.getPosition().latitude);
-        consignment.setDestination_lng(markerOptions.getPosition().longitude);
+        consignment.setDestination_lat(markerOptions.getPosition().longitude);
+
+
+
         markerOptions.title("Delivery Address");
         markerOptions.snippet("Make sure to Zoom in for Accuracy");
 
@@ -127,7 +131,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
                 .setIcon(R.mipmap.ic_launcher_round)
                 .setTitle("Destination Location Saved")
                 .setCancelable(false)
-                .setMessage("Choose Pickup Date")
+                .setMessage(markerOptions.getPosition().toString())
                 .setPositiveButton("Pick A Date", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -204,7 +208,6 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
 
                                     dialog.dismiss();
                                     Intent intent=new Intent(DestinationChooserActivity.this,CargoOwnerActitivy.class);
-                                    intent.putExtra("Consignment",consignment);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -272,6 +275,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+
                 mMap.clear();
                 markerOptions.position(latLng);
                 mMap.addMarker(markerOptions);

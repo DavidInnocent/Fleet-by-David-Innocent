@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ke.co.ximmoz.fleet.Models.Consignment;
 import ke.co.ximmoz.fleet.Repositories.ConsignmentRepository;
@@ -22,7 +23,7 @@ public class ConsignmentViewmodel extends AndroidViewModel {
     {
         return consignmentRepository.SaveConsignment(consignment);
     }
-    public MutableLiveData<Consignment> GetConsignments(Consignment consignment)
+    public MutableLiveData<List<Consignment>> GetConsignments()
     {
         return consignmentRepository.GetConsignments();
     }

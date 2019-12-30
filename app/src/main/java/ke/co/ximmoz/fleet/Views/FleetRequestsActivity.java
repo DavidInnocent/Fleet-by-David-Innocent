@@ -29,6 +29,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
+import java.util.List;
+
 import ke.co.ximmoz.fleet.Models.Consignment;
 import ke.co.ximmoz.fleet.Views.Utils.ConsignmentDialog;
 import ke.co.ximmoz.fleet.Views.Utils.MarkerClusters;
@@ -100,10 +102,10 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onSuccess(Location location) {
                 mLocation=location;
-                mMap.setOnCameraIdleListener(clustersClusterManager);
-                mMap.setOnMarkerClickListener(clustersClusterManager);
                 currentPosition=new LatLng(location.getLatitude(),location.getLongitude());
 
+                mMap.setOnMarkerClickListener(clustersClusterManager);
+                mMap.setOnCameraIdleListener(clustersClusterManager);
                 MarkerOptions opt=new MarkerOptions()
                         .title("You are here")
                         .position(currentPosition)
@@ -141,24 +143,25 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         });
 
 
-        consignmentViewmodel.GetConsignments(consignment).observe(this, new Observer<Consignment>() {
+        consignmentViewmodel.GetConsignments().observe(this, new Observer<List<Consignment>>() {
             @Override
-            public void onChanged(Consignment consignments) {
+            public void onChanged(List<Consignment> consignments) {
                 addItems(consignments);
-                }
+            }
         });
 
     }
 
-    private void addItems(Consignment consignmentReturned) {
+    private void addItems(List<Consignment> consignmentReturned) {
 
 
-        LatLng points= new LatLng(consignmentReturned.getDestination_lat(),consignmentReturned.getDestination_lng());
-        MarkerClusters offsetItem=new MarkerClusters(points,"None","Pickup time","Delivery date:"+consignmentReturned.getDate_of_pickup(),consignmentReturned);
-        clustersClusterManager.addItem(offsetItem);
+        for(Consignment con:consignmentReturned) {
+            LatLng points = new LatLng(con.getDestination_lng(),con.getDestination_lat() );
+            MarkerClusters offsetItem = new MarkerClusters(points, "None", "Pickup time", "Delivery date:" + con.getDate_of_pickup(), con);
+            clustersClusterManager.addItem(offsetItem);
+
+        }
         clustersClusterManager.cluster();
-
-
 
 
     }
