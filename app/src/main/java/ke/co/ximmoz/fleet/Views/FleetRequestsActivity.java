@@ -15,6 +15,16 @@ import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.directions.route.AbstractRouting;
+import com.directions.route.Route;
+import com.directions.route.RouteException;
+import com.directions.route.Routing;
+import com.directions.route.RoutingListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,10 +35,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.maps.android.SphericalUtil;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ke.co.ximmoz.fleet.Models.Consignment;
@@ -37,15 +52,19 @@ import ke.co.ximmoz.fleet.Views.Utils.MarkerClusters;
 import ke.co.ximmoz.fleet.R;
 import ke.co.ximmoz.fleet.Viewmodels.ConsignmentViewmodel;
 
-public class FleetRequestsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class FleetRequestsActivity extends FragmentActivity implements OnMapReadyCallback, RoutingListener {
 
     private GoogleMap mMap;
     private ClusterManager<MarkerClusters> clustersClusterManager;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location mLocation;
     LatLng currentPosition;
+    LatLng dest;
+    LatLng pickup;
+    private static MarkerOptions opt=new MarkerOptions();
     private Consignment consignment;
     private ConsignmentViewmodel consignmentViewmodel;
+    private ArrayList<Polyline> polylines=new ArrayList<>();
 
 
     @Override
@@ -96,14 +115,16 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.map_style));
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.mary_map));
         clustersClusterManager=new ClusterManager<>(this,mMap);
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location-> {
+            if(location!=null)
+            {
+
+
                 mLocation=location;
                 currentPosition=new LatLng(location.getLatitude(),location.getLongitude());
-
+                mMap.clear();
                 mMap.setOnMarkerClickListener(clustersClusterManager);
                 mMap.setOnCameraIdleListener(clustersClusterManager);
                 MarkerOptions opt=new MarkerOptions()
@@ -113,8 +134,9 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
                 mMap.addMarker(opt);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,14));
 
-
             }
+
+
         });
         // Add a marker in Sydney and move the camera
 
@@ -123,51 +145,121 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onClusterInfoWindowClick(Cluster<MarkerClusters> cluster) {
 
-                FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-                Fragment fragment=getSupportFragmentManager().findFragmentByTag("dialog");
-                for(MarkerClusters markerCluster:cluster.getItems())
-                {
+                    Toast.makeText(FleetRequestsActivity.this, "clicker", Toast.LENGTH_SHORT).show();
 
-                    if(fragment!=null)
-                    {
-                        fragmentTransaction.remove(fragment);
-                    }
-                    fragmentTransaction.addToBackStack(null);
-                    DialogFragment dialogFragment=new ConsignmentDialog();
-                    dialogFragment.show(fragmentTransaction,"dialog");
-                    Toast.makeText(FleetRequestsActivity.this, markerCluster.getConsignment().getContainer_size(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        clustersClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MarkerClusters>() {
-            @Override
-            public boolean onClusterItemClick(MarkerClusters markerClusters) {
-
-                return false;
             }
         });
 
 
-        consignmentViewmodel.GetConsignments().observe(this, new Observer<List<Consignment>>() {
-            @Override
-            public void onChanged(List<Consignment> consignments) {
-                addItems(consignments);
+
+        clustersClusterManager.setOnClusterItemClickListener(markerClusters-> {
+
+//                FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+//                Fragment fragment=getSupportFragmentManager().findFragmentByTag("dialog");
+//                if(fragment!=null)
+//                {
+//                    fragmentTransaction.remove(fragment);
+//                }
+//                fragmentTransaction.addToBackStack(null);
+//                DialogFragment dialogFragment=new ConsignmentDialog(markerClusters.getConsignment());
+//                dialogFragment.show(fragmentTransaction,"dialog");
+
+
+            double destinationLat=markerClusters.getConsignment().getDestination_lat();
+            double destinationLng=markerClusters.getConsignment().getDestination_lng();
+
+            if(markerClusters.getConsignment().getPickup_location()=="Nairobi Inland Port")
+            {
+                pickup=new LatLng(-1.335049,36.878033);
             }
+            else {
+                pickup = new LatLng(-0.691322, 36.449580);
+            }
+             dest=new LatLng(destinationLat,destinationLng);
+
+
+            String api=getResources().getString(R.string.google_api_key);
+
+            Routing routing=new Routing.Builder()
+                    .key(api)
+                    .travelMode(AbstractRouting.TravelMode.DRIVING)
+                    .waypoints(pickup,dest)
+                    .withListener(this)
+                    .alternativeRoutes(false)
+                    .build();
+            routing.execute();
+             return false;
+
         });
+
+
+
+
+        consignmentViewmodel.GetConsignments().observe(this, consignments-> {
+            mMap.clear();
+            addItems(consignments);
+
+        });
+
 
     }
+
+
 
     private void addItems(List<Consignment> consignmentReturned) {
 
 
+        clustersClusterManager.clearItems();
         for(Consignment con:consignmentReturned) {
-            LatLng points = new LatLng(con.getDestination_lng(),con.getDestination_lat() );
-            MarkerClusters offsetItem = new MarkerClusters(points, "None", "Pickup time", "Delivery date:" + con.getDate_of_pickup(), con);
+            LatLng points=new LatLng(con.getDestination_lat(),con.getDestination_lng());
+            MarkerClusters offsetItem = new MarkerClusters(points, con.getId(), con.getPickup_location(), "Pickup Location date:" + con.getPickup_location(), con);
             clustersClusterManager.addItem(offsetItem);
 
         }
         clustersClusterManager.cluster();
 
+    }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        return;
+    }
+
+    @Override
+    public void onRoutingStart() {
+
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
+        if(polylines.size()>0)
+        {
+            for(Polyline polyline:polylines)
+            {
+                polyline.remove();
+            }
+        }
+
+        String distance = null;
+
+        for(int i=0;i<route.size();i++)
+        {
+            PolylineOptions polylineOptions=new PolylineOptions();
+            polylineOptions.color(getResources().getColor(R.color.colorPrimary));
+            polylineOptions.width(5+i*3);
+            polylineOptions.addAll(route.get(i).getPoints());
+            Polyline polyline=mMap.addPolyline(polylineOptions);
+            polylines.add(polyline);
+            distance=route.get(i).getDistanceText();
+
+        }
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pickup,14));
+    }
+
+
+    @Override
+    public void onRoutingCancelled() {
 
     }
 }

@@ -27,4 +27,8 @@ public class ConsignmentViewmodel extends AndroidViewModel {
     {
         return consignmentRepository.GetConsignments();
     }
+
+    public LiveData<Consignment> UpdateConsignment(Consignment consignment) {
+        return consignmentRepository.UpdateConsignment(consignment);
+    }
 }

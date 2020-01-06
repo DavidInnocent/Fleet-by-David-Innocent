@@ -52,7 +52,7 @@ public class ConsignmentRepository {
     {
         MutableLiveData<List<Consignment>> consignmentLiveData=new MutableLiveData<>();
         List<Consignment> consignments=new ArrayList<>();
-        Query query=databaseReference.child("PendingConsignments").orderByChild("status").equalTo("active");
+        Query query=databaseReference.child("PendingConsignments").orderByChild("status").equalTo("notpaid");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -60,7 +60,9 @@ public class ConsignmentRepository {
                 {
                     for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
                     {
-                        consignments.add(dataSnapshot1.getValue(Consignment.class));
+                        Consignment con=dataSnapshot1.getValue(Consignment.class);
+                        con.setId(dataSnapshot1.getKey());
+                        consignments.add(con);
                     }
                     consignmentLiveData.setValue(consignments);
                 }
@@ -72,5 +74,19 @@ public class ConsignmentRepository {
             }
         });
         return consignmentLiveData;
+    }
+
+    public LiveData<Consignment> UpdateConsignment(Consignment consignment) {
+        MutableLiveData<Consignment> consignmentMutableLiveData=new MutableLiveData<>();
+        databaseReference.child("PendingConsignments").child(consignment.getId()).setValue(consignment).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    consignmentMutableLiveData.setValue(consignment);
+                }
+            }
+        });
+        return consignmentMutableLiveData;
     }
 }

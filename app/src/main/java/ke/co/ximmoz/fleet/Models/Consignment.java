@@ -1,10 +1,30 @@
 package ke.co.ximmoz.fleet.Models;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 
 public class Consignment implements Serializable {
-    String id,container_size, amount,status,owner,driver,date_of_pickup,date_delivered;
-    double destination_lat,destination_lng,pickup_location_lat,pickup_location_lng;
+    String id,container_size, amount,status,owner,driver,date_of_pickup,date_delivered,pickup_location;
+    double destination_lat;
+
+    public double getDestination_lat() {
+        return destination_lat;
+    }
+
+    public void setDestination_lat(double destination_lat) {
+        this.destination_lat = destination_lat;
+    }
+
+    public double getDestination_lng() {
+        return destination_lng;
+    }
+
+    public void setDestination_lng(double destination_lng) {
+        this.destination_lng = destination_lng;
+    }
+
+    double destination_lng;
 
     public String getId() {
         return id;
@@ -70,37 +90,15 @@ public class Consignment implements Serializable {
         this.date_delivered = date_delivered;
     }
 
-    public double getDestination_lat() {
-        return destination_lat;
+
+    public String getPickup_location() {
+        return pickup_location;
     }
 
-    public void setDestination_lat(double destination_lat) {
-        this.destination_lat = destination_lat;
+    public void setPickup_location(String pickup_location) {
+        this.pickup_location = pickup_location;
     }
 
-    public double getDestination_lng() {
-        return destination_lng;
-    }
-
-    public void setDestination_lng(double destination_lng) {
-        this.destination_lng = destination_lng;
-    }
-
-    public double getPickup_location_lat() {
-        return pickup_location_lat;
-    }
-
-    public void setPickup_location_lat(double pickup_location_lat) {
-        this.pickup_location_lat = pickup_location_lat;
-    }
-
-    public double getPickup_location_lng() {
-        return pickup_location_lng;
-    }
-
-    public void setPickup_location_lng(double pickup_location_lng) {
-        this.pickup_location_lng = pickup_location_lng;
-    }
 
     public Consignment() {
 

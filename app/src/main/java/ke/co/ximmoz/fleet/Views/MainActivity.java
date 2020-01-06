@@ -80,11 +80,19 @@ public class MainActivity extends AppCompatActivity {
                 if(firebaseUser==null){
                     Toast.makeText(MainActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                 }
-                Intent intent=new Intent(MainActivity.this,ChooseRole.class);
+
                 User userr=new User(firebaseUser.getDisplayName(),firebaseUser.getEmail(),firebaseUser.getUid(),firebaseUser.getPhoneNumber());
-                intent.putExtra("User",userr);
-                startActivity(intent);
-                finish();
+                authViewModel.saveUserToRTDB(userr).observe(MainActivity.this, user-> {
+                    if(user!=null)
+                    {
+                        Intent intent=new Intent(MainActivity.this,ChooseRole.class);
+                        intent.putExtra("User",userr);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+
 
             }
         });
