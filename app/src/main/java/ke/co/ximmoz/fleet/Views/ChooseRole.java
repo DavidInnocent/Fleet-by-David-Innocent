@@ -21,6 +21,12 @@ import ke.co.ximmoz.fleet.R;
 
 public class ChooseRole extends AppCompatActivity {
 
+    @OnClick(R.id.logout) void logout()
+    {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(ChooseRole.this,MainActivity.class));
+        finish();
+    }
     private User user;
     @OnClick(R.id.findTruck) void findtruck(){
         user.setIsDriver("no");
@@ -51,7 +57,7 @@ public class ChooseRole extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful())
                 {
-                    Intent intent=new Intent(ChooseRole.this,DriverDashboardActitivy.class);
+                    Intent intent=new Intent(ChooseRole.this,FleetRequestsActivity.class);
                     intent.putExtra("User",user);
                     startActivity(intent);
                 }
