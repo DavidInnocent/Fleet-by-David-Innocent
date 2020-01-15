@@ -167,9 +167,6 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
 
 
         });
-
-
-
         clustersClusterManager.setOnClusterInfoWindowClickListener(cluster-> {
                 for(Marker marker:cluster.getItems())
                 {
@@ -181,18 +178,11 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         pickupMarker=new MarkerOptions();
 
         clustersClusterManager.setOnClusterItemClickListener(marker -> {
-
-
-
-
             double destinationLat= marker.getConsignment().getDestination_lat();
             double destinationLng= marker.getConsignment().getDestination_lng();
 
             double pickupLat= marker.getConsignment().getPickup_lat();
             double pickupLng= marker.getConsignment().getPickup_lng();
-
-
-
             consignment= marker.getConsignment();
             pickup=new LatLng(pickupLat,pickupLng);
             dest=new LatLng(destinationLat,destinationLng);
@@ -245,10 +235,6 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
 
 
     }
-
-
-
-
     private void addItems(List<Consignment> consignmentReturned) {
 
 
@@ -285,8 +271,6 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
                 polyline.remove();
             }
         }
-
-
         String distance = null;
         String destinationText = null;
         String pickupText = null;
