@@ -69,7 +69,6 @@ public class ConsignmentRepository {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-
             }
 
             @Override

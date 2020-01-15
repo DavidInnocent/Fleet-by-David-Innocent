@@ -60,6 +60,7 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONObject;
 
@@ -383,11 +384,12 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
                         .setMessage("Proceeding to payment")
                         .setPositiveButton("Okay", (dialog,which)-> {
                             consignmentFinal.setStatus("AwaitingPickup");
+                            consignmentFinal.setOwner(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             consignmentViewmodel.SaveConsignment(consignmentFinal).observe(DestinationChooserActivity.this, new Observer<String>() {
                                 @Override
                                 public void onChanged(String s) {
                                     dialog.dismiss();
-                                    Intent intent=new Intent(DestinationChooserActivity.this,MakePaymentActivity.class);
+                                    Intent intent=new Intent(DestinationChooserActivity.this,CargoOwnerActitivy.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -395,7 +397,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
 
                         })
                         .setNegativeButton("Not Now", (dialog,which)-> {
-                                consignmentFinal.setStatus("notpaid");
+                                consignmentFinal.setStatus("AwaitingPickup");
                             consignmentViewmodel.SaveConsignment(consignmentFinal).observe(DestinationChooserActivity.this, new Observer<String>() {
                                 @Override
                                 public void onChanged(String s) {

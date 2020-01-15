@@ -1,39 +1,28 @@
 package ke.co.ximmoz.fleet.Views;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,13 +31,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.maps.android.SphericalUtil;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -57,14 +42,14 @@ import java.util.List;
 
 import ke.co.ximmoz.fleet.Models.Consignment;
 import ke.co.ximmoz.fleet.Views.Utils.ConsignmentDialog;
-import ke.co.ximmoz.fleet.Views.Utils.MarkerClusters;
+import ke.co.ximmoz.fleet.Views.Utils.Marker;
 import ke.co.ximmoz.fleet.R;
 import ke.co.ximmoz.fleet.Viewmodels.ConsignmentViewmodel;
 
 public class FleetRequestsActivity extends FragmentActivity implements OnMapReadyCallback, RoutingListener {
 
     private GoogleMap mMap;
-    private ClusterManager<MarkerClusters> clustersClusterManager;
+    private ClusterManager<Marker> clustersClusterManager;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location mLocation;
     LatLng currentPosition;
@@ -78,7 +63,7 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
     private LocationRequest locationRequest;
 
     MarkerOptions pickupMarker;
-    static Marker marker;
+    static com.google.android.gms.maps.model.Marker marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,31 +170,30 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
 
 
 
-        clustersClusterManager.setOnClusterInfoWindowClickListener(new ClusterManager.OnClusterInfoWindowClickListener<MarkerClusters>() {
-            @Override
-            public void onClusterInfoWindowClick(Cluster<MarkerClusters> cluster) {
+        clustersClusterManager.setOnClusterInfoWindowClickListener(cluster-> {
+                for(Marker marker:cluster.getItems())
+                {
+                    Toast.makeText(FleetRequestsActivity.this, marker.getConsignment().getContainer_size(), Toast.LENGTH_SHORT).show();
+                }
 
-                    Toast.makeText(FleetRequestsActivity.this, "clicker", Toast.LENGTH_SHORT).show();
-
-            }
         });
 
         pickupMarker=new MarkerOptions();
 
-        clustersClusterManager.setOnClusterItemClickListener(markerClusters-> {
+        clustersClusterManager.setOnClusterItemClickListener(marker -> {
 
 
 
 
-            double destinationLat=markerClusters.getConsignment().getDestination_lat();
-            double destinationLng=markerClusters.getConsignment().getDestination_lng();
+            double destinationLat= marker.getConsignment().getDestination_lat();
+            double destinationLng= marker.getConsignment().getDestination_lng();
 
-            double pickupLat=markerClusters.getConsignment().getPickup_lat();
-            double pickupLng=markerClusters.getConsignment().getPickup_lng();
+            double pickupLat= marker.getConsignment().getPickup_lat();
+            double pickupLng= marker.getConsignment().getPickup_lng();
 
 
 
-            consignment=markerClusters.getConsignment();
+            consignment= marker.getConsignment();
             pickup=new LatLng(pickupLat,pickupLng);
             dest=new LatLng(destinationLat,destinationLng);
             pickupMarker.draggable(false);
@@ -218,16 +202,16 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
                     .snippet("This is the pickup location")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pickup,14));
-            if(marker!=null)
+            if(FleetRequestsActivity.marker !=null)
             {
-                marker.remove();
+                FleetRequestsActivity.marker.remove();
             }
-            marker=mMap.addMarker(pickupMarker);
+            FleetRequestsActivity.marker =mMap.addMarker(pickupMarker);
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pickup,14));
 
 
             String api=getResources().getString(R.string.google_api_key);
-            if(markerListener!=""&&markerListener==markerClusters.getMarkerId())
+            if(markerListener!=""&&markerListener== marker.getMarkerId())
             {
 
                 FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
@@ -237,10 +221,10 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
                     fragmentTransaction.remove(fragment);
                 }
                 fragmentTransaction.addToBackStack(null);
-                DialogFragment dialogFragment=new ConsignmentDialog(markerClusters.getConsignment(),fusedLocationProviderClient);
+                DialogFragment dialogFragment=new ConsignmentDialog(marker.getConsignment(),fusedLocationProviderClient);
                 dialogFragment.show(fragmentTransaction,"dialog");
             }
-            markerListener=markerClusters.getMarkerId();
+            markerListener= marker.getMarkerId();
             Routing routing=new Routing.Builder()
                     .key(api)
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
@@ -272,7 +256,7 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
         for(Consignment con:consignmentReturned)
         {
             LatLng points=new LatLng(con.getDestination_lat(),con.getDestination_lng());
-            MarkerClusters offsetItem = new MarkerClusters(points, con.getId(), "NOTHING", "Pickup Location date:" + "NOTHING", con);
+            Marker offsetItem = new Marker(points, con.getId(), "NOTHING", "Pickup Location date:" + "NOTHING", con);
             clustersClusterManager.addItem(offsetItem);
 
         }
@@ -282,7 +266,7 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
 
     @Override
     public void onRoutingFailure(RouteException e) {
-        return;
+
     }
 
     @Override

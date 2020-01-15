@@ -5,7 +5,7 @@ import com.google.maps.android.clustering.ClusterItem;
 
 import ke.co.ximmoz.fleet.Models.Consignment;
 
-public class MarkerClusters implements ClusterItem {
+public class Marker implements ClusterItem {
 
     private final LatLng positiond;
     private final String markerId;
@@ -18,7 +18,7 @@ public class MarkerClusters implements ClusterItem {
 
     private final String snippet;
 
-    public MarkerClusters(LatLng positiond, String markerId, String title, String snippet,Consignment consignment) {
+    public Marker(LatLng positiond, String markerId, String title, String snippet, Consignment consignment) {
         this.positiond = positiond;
         this.markerId = markerId;
         this.title = title;
