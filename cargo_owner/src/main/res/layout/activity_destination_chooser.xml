@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Views.DestinationChooserActivity"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"></fragment>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:id="@+id/main_pop_up"
+        android:scaleY="1"
+        android:paddingLeft="8dp"
+        android:background="@drawable/destination_pop_up"
+        map:layout_constraintBottom_toBottomOf="@+id/map"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent">
+
+
+
+        <TextView
+            android:id="@+id/pick_location"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Choose Pickup Location"
+            android:background="@drawable/destination_pop_up"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            map:layout_constraintStart_toStartOf="@+id/guideline"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/delivery_location"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Delivery Location"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            map:layout_constraintStart_toStartOf="@+id/guideline"
+            map:layout_constraintTop_toBottomOf="@+id/pick_location" />
+
+        <Spinner
+            android:id="@+id/containerDimensions"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            map:layout_constraintBottom_toTopOf="@+id/getMeATruck"
+            map:layout_constraintStart_toStartOf="@+id/guideline"
+            map:layout_constraintTop_toBottomOf="@+id/chooseCon"
+            map:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/getMeATruck"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_button"
+            android:padding="8dp"
+            android:text="@string/pickup_location"
+            android:textColor="#fff"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="@id/main_pop_up"
+            map:layout_constraintStart_toStartOf="@id/main_pop_up"
+            map:layout_constraintTop_toBottomOf="@+id/containerDimensions" />
+
+        <TextView
+            android:id="@+id/chooseCon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Choose Container Size"
+            android:textSize="16sp"
+            map:layout_constraintStart_toStartOf="@+id/guideline"
+            map:layout_constraintTop_toBottomOf="@+id/delivery_location" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            map:layout_constraintGuide_begin="112dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">fleet</string>
+
+    <string name="title_activity_choose_role">ChooseRole</string>
+    <string name="title_activity_near_by_drivers">Map</string>
+    <string name="title_activity_destination_chooser">Map</string>
+    <string name="choose_location">Choose Consignment Location</string>
+
+    <string name="pickup_location">Confirm Pickup</string>
+    <string name="drop_off_location">Choose Destination Location</string>
+    <string name="choose_date_of_pickup">Choose Pickup Date</string>
+
+
+    <string name="choose_container">Choose Container Size</string>
+
+    <string name="title_activity_fleet_requests">Map</string>
+    <string name="pickup_date">Choose Pickup Location</string>
+    <string name="finish">Finish</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="make_payment">Make payment</string>
+
+    <string name="consumer_key">UayFiWMoROh6SEFstbPNLi8s2w6Nicbm</string>
+    <string name="consumer_secret">IeLOrjh3h4fwOK4L</string>
+
+    <string name="auth_url">https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials</string>
+    <string name="shortcode">604781</string>
+    <string name="callback">https://us-central1-adfy-9ee95.cloudfunctions.net/ConfirmationURL</string>
+    <string name="passkey">4ae3efce9928aa52f259a31e6b558dc6ae1836e38fc3b43090b0079fa07edc03</string>
+    <string name="mpesa_payment">https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest</string>
+    <string name="title_activity_consignment_tracker">Map</string>
+</resources>

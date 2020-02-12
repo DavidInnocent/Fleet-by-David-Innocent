@@ -1,2 +1,2 @@
-include ':app'
+include ':cargo_owner'
 rootProject.name='fleet'
