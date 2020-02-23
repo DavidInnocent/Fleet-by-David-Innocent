@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="container_size">
+        <item>Choose...</item>
         <item>20 Feet Container Truck</item>
         <item>40 Feet Container Truck</item>
     </string-array>

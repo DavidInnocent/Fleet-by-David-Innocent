@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">fleet</string>
 
     <string name="title_activity_choose_role">ChooseRole</string>

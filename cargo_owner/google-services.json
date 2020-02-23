@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "347829116347-u2vu0chnlu76nbqskpvh773fqeaeri6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ke.co.ximmoz.fleet",
+            "certificate_hash": "da31b96dbd6b1204e3ed971f3c78daffd384e021"
+          }
+        },
+        {
           "client_id": "347829116347-9bijp4it5kuu7rniuipu7mhgnlcfdosp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
