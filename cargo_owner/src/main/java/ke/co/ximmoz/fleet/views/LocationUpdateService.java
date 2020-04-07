@@ -14,24 +14,23 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
+
 
 public class LocationUpdateService extends Service {
 
     FusedLocationProviderClient client;
     LocationRequest locationRequest;
     Consignment consignment;
-    private DatabaseReference databaseReference;
 
-    public LocationUpdateService() {
+
+    public LocationUpdateService(Consignment consignment) {
+        this.consignment=consignment;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        consignment = (Consignment) intent.getSerializableExtra("Consignment");
         StartLocation();
         return super.onStartCommand(intent, flags, startId);
 
@@ -41,9 +40,6 @@ public class LocationUpdateService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
     }
 
     private void StartLocation() {
@@ -74,7 +70,7 @@ public class LocationUpdateService extends Service {
     }
 
     private void SendLocationToFirebase(Location location) {
-        databaseReference.child("OngoingPickups").child(consignment.getId()).setValue(location);
+//        databaseReference.child("OngoingPickups").child(consignment.getId()).setValue(location);
     }
 
     @Override

@@ -48,8 +48,7 @@ public class LoginFragment extends Fragment {
 
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
     private NavController navController;
     private AuthViewModel authViewModel;
     private FieldsValidator fieldsValidator;

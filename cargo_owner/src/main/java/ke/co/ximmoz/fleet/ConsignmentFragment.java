@@ -3,6 +3,7 @@ package ke.co.ximmoz.fleet;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,10 +36,15 @@ import com.directions.route.RoutingListener;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.LocationRestriction;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.labo.kaji.fragmentanimations.CubeAnimation;
 import com.labo.kaji.fragmentanimations.MoveAnimation;
 
@@ -46,11 +53,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ke.co.ximmoz.fleet.viewmodels.ConsignmentViewmodel;
+import ke.co.ximmoz.fleet.views.Utils.ConsignmentTransactionCounter;
+import ke.co.ximmoz.fleet.views.Utils.Shard;
 
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
@@ -87,6 +97,8 @@ public class ConsignmentFragment extends Fragment implements RoutingListener {
     TextView dateOfPickup;
     @BindView(R.id.to_payment)
     ImageView toPayment;
+    @BindView(R.id.progress_dialog)
+    LinearLayout progress_dialog;
 
     private Unbinder unbinder;
 
@@ -142,8 +154,8 @@ public class ConsignmentFragment extends Fragment implements RoutingListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        ArrayAdapter<CharSequence> containerSize = ArrayAdapter.createFromResource(getActivity(), R.array.container_size, android.R.layout.simple_spinner_dropdown_item);
-
+        ArrayAdapter<CharSequence> containerSize = ArrayAdapter.createFromResource(getActivity(), R.array.container_size, R.layout.spinner_items);
+        containerSize.setDropDownViewResource(R.layout.spinner_dropdown_item);
         container.setAdapter(containerSize);
         pickupSupportFragment=(AutocompleteSupportFragment)getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_delivery);
         destinationSupportFragment=(AutocompleteSupportFragment)getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_destination);
@@ -161,6 +173,8 @@ public class ConsignmentFragment extends Fragment implements RoutingListener {
 
         pickupSupportFragment.a.setTextSize(13.0f);
         destinationSupportFragment.a.setTextSize(13.0f);
+        pickupSupportFragment.a.setTextColor(getResources().getColor(R.color.white));
+        destinationSupportFragment.a.setTextColor(getResources().getColor(R.color.white));
 
         pickupSupportFragment.setPlaceFields(Arrays.asList(Place.Field.NAME,Place.Field.ADDRESS,Place.Field.ID,Place.Field.LAT_LNG));
         destinationSupportFragment.setPlaceFields(Arrays.asList(Place.Field.NAME,Place.Field.ADDRESS,Place.Field.ID,Place.Field.LAT_LNG));
@@ -224,7 +238,9 @@ public class ConsignmentFragment extends Fragment implements RoutingListener {
 
 
         toPayment.setOnClickListener((v)-> {
+
             if (destination_location != null && pickup_location != null) {
+                progress_dialog.setVisibility(View.VISIBLE);
                 String api = getResources().getString(R.string.google_api_key);
                 Routing routing = new Routing.Builder()
                         .key(api)
@@ -234,6 +250,10 @@ public class ConsignmentFragment extends Fragment implements RoutingListener {
                         .alternativeRoutes(false)
                         .build();
                 routing.execute();
+            }
+            else
+            {
+                Toast.makeText(getContext(), "All fields required to proceed", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -313,16 +333,16 @@ public class ConsignmentFragment extends Fragment implements RoutingListener {
 
         consignmentViewmodel.consignment.setContainer_size(container.getSelectedItem().toString());
 
+        progress_dialog.setVisibility(View.VISIBLE);
         consignmentViewmodel.SaveConsignment().observe(getViewLifecycleOwner(), s -> {
             if(s=="1")
             {
                 if(navController.getCurrentDestination().getId()==R.id.consignmentFragment)
                 {
-
+                    progress_dialog.setVisibility(View.GONE);
                     NavDirections directions=ConsignmentFragmentDirections.actionConsignmentFragmentToSampleFragmentDialog(consignmentViewmodel.consignment);
                     navController.navigate(directions);
                 }
-
             }
             else
             {
@@ -335,4 +355,14 @@ public class ConsignmentFragment extends Fragment implements RoutingListener {
     public void onRoutingCancelled() {
         Toast.makeText(getActivity(), "Sorry Routing Cancelled", Toast.LENGTH_SHORT).show();
     }
+
+    /*
+    * TODO initialize a counter and number of shards if they are not yet initialized
+    *
+    * */
+
+
+
+
+
 }

@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
 import ke.co.ximmoz.fleet.models.LocationObject;
 import ke.co.ximmoz.fleet.R;
 

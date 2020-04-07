@@ -39,7 +39,7 @@ import com.google.maps.android.clustering.ClusterManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
 import ke.co.ximmoz.fleet.views.Utils.ConsignmentDialog;
 import ke.co.ximmoz.fleet.views.Utils.Marker;
 import ke.co.ximmoz.fleet.R;
@@ -230,11 +230,11 @@ public class FleetRequestsActivity extends FragmentActivity implements OnMapRead
 
         });
 
-        consignmentViewmodel.GetConsignments().observe(this, consignments-> {
-            mMap.clear();
-            addItems(consignments);
-
-        });
+//        consignmentViewmodel.GetConsignments().observe(this, consignments-> {
+//            mMap.clear();
+//            addItems(consignments);
+//
+//        });
 
 
     }

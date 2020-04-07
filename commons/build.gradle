@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation libs.navigation_ui
+    implementation libs.navigation_fragment
+    implementation libs.appcompat
+    implementation libs.constraintlayout
+    implementation libs.crashlytics
+    implementation libs.firebaseauth
+    implementation libs.play_services_auth
+    implementation libs.material
+    implementation libs.lifecycle_extensions
+    implementation libs.kaji
+    implementation libs.firestore
+    implementation libs.butterknife
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation libs.storage
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    annotationProcessor libs.butterknife_processor
+    implementation libs.volley
+    implementation libs.maps_util
+    implementation libs.play_services_maps
+    implementation libs.google_places
+    implementation libs.play_services_location
+    testImplementation libs.junit
+    implementation libs.play_services_auth
+    implementation libs.legacy_support
+    implementation libs.junit_ext
+    implementation libs.espresso
+    implementation libs.jd_alexander
+    implementation libs.rtdb
+    implementation libs.butterknife
+
+}

@@ -1,20 +1,27 @@
 package ke.co.ximmoz.fleet;
 
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.labo.kaji.fragmentanimations.CubeAnimation;
 import com.labo.kaji.fragmentanimations.MoveAnimation;
 
@@ -79,6 +86,7 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,6 +95,10 @@ public class DashboardFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_dashboard,container,false);
         navController= Navigation.findNavController(container);
         unbinder= ButterKnife.bind(this,view);
+
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+
         return view;
     }
 
@@ -111,7 +123,23 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+        }
+        return super.onOptionsItemSelected(item);
 
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
+        inflater.inflate(R.menu.toolbar_menu, menu);
+
+    }
 
     @Override
     public void onDestroyView() {

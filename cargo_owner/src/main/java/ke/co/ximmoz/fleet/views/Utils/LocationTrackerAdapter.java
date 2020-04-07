@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import ke.co.ximmoz.fleet.models.Consignment;
+
+import co.ke.ximmoz.commons.models.Consignment;
 import ke.co.ximmoz.fleet.R;
 import ke.co.ximmoz.fleet.viewmodels.ConsignmentViewmodel;
 import ke.co.ximmoz.fleet.views.ConsignmentTrackerActivity;

@@ -5,12 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,15 +17,13 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
-import com.labo.kaji.fragmentanimations.CubeAnimation;
+import com.google.firebase.firestore.DocumentChange;
 import com.labo.kaji.fragmentanimations.MoveAnimation;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
 import ke.co.ximmoz.fleet.viewmodels.ConsignmentViewmodel;
 import ke.co.ximmoz.fleet.views.Utils.ConsignmentAdapter;
 
@@ -50,12 +45,14 @@ public class ConsignmentsHistoryFragment extends Fragment {
     private NavController navController;
     private Unbinder unbinder;
     private ConsignmentViewmodel consignmentViewmodel;
+    private RecyclerView.LayoutManager layoutManager;
+    private ConsignmentAdapter adapter;
 
 
-    @BindView(R.id.consignmentRecyclerView)
+    @BindView(R.id.consignmentRecyclerVieww)
     RecyclerView consignmentRecyclerView;
 
-    private ConsignmentAdapter adapter;
+
 
 
     public ConsignmentsHistoryFragment() {
@@ -89,6 +86,8 @@ public class ConsignmentsHistoryFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         consignmentViewmodel= ViewModelProviders.of(this).get(ConsignmentViewmodel.class);
+
+
     }
 
     @Override
@@ -97,7 +96,46 @@ public class ConsignmentsHistoryFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_consignments_history,container,false);
         navController= Navigation.findNavController(container);
         unbinder= ButterKnife.bind(this,view);
+        layoutManager=new LinearLayoutManager(getContext());
+        consignmentRecyclerView.setLayoutManager(layoutManager);
+        consignmentRecyclerView.setHasFixedSize(true);
 
+        consignmentViewmodel.GetOwnerConsignments().observe(getViewLifecycleOwner(), consignments -> {
+            adapter=new ConsignmentAdapter(getContext(),consignments,navController);
+            consignmentRecyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        });
+
+        consignmentViewmodel.GetOwnerUpdatedConsignments().observe(getViewLifecycleOwner(), consignments -> {
+
+            for(DocumentChange dc:consignments.getDocumentChanges())
+            {
+                switch (dc.getType()){
+                    case MODIFIED:
+                    Consignment con=dc.getDocument().toObject(Consignment.class);
+                    int positionCon=adapter.getPositionBaseOnItemID(con.getId());
+                    adapter.updateTextView(positionCon,con);
+                    break;
+                    case REMOVED:
+                        Consignment conRemoved=dc.getDocument().toObject(Consignment.class);
+                        int positionConRemoved=adapter.getPositionBaseOnItemID(conRemoved.getId());
+                        adapter.RemoveTextView(positionConRemoved);
+                        break;
+                    case ADDED:
+                        Consignment conAdded=dc.getDocument().toObject(Consignment.class);
+                        if(conAdded==null)
+                        {
+                            Toast.makeText(getContext(), "no data", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+
+
+                }
+
+            }
+
+        });
 
         return view;
     }
@@ -106,16 +144,6 @@ public class ConsignmentsHistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toast.makeText(getActivity(), "done", Toast.LENGTH_SHORT).show();
-
-        consignmentViewmodel.GetOwnerConsignments().observe(getViewLifecycleOwner(), new Observer<List<Consignment>>() {
-            @Override
-            public void onChanged(List<Consignment> consignments) {
-                adapter=new ConsignmentAdapter(getContext(),consignments);
-                consignmentRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
 

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red"
+    android:orientation="vertical"
+    tools:context=".views.DashboardFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15.7dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27.7dp"
+                android:layout_gravity="center"
+                android:text="Dashboard"
+                android:textAlignment="center"
+                android:layout_marginBottom="10dp"
+                android:textColor="#fff"
+                android:textSize="31.3sp" />
+
+            <FrameLayout
+                android:id="@+id/availableconsignments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="20.7dp">
+
+                <ImageView
+                    android:id="@+id/new_consignment"
+                    android:layout_width="match_parent"
+                    android:layout_height="244dp"
+                    android:background="@drawable/rounded_blue" />
+
+
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-30dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="20.7dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27.7dp"
+                        android:layout_gravity="center"
+                        android:text="View Available Consignments"
+                        android:textColor="@color/white"
+                        android:textSize="21.3sp" />
+
+
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/my_consignments"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical"
+                android:paddingLeft="20.7dp">
+
+                <ImageView
+                    android:id="@+id/history_consignments"
+                    android:layout_width="match_parent"
+                    android:layout_height="244dp"
+                    android:background="@drawable/rounded_blue" />
+
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="20.7dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27.7dp"
+                        android:layout_gravity="center"
+                        android:text="My Consignments"
+                        android:textColor="@color/white"
+                        android:textSize="21.3sp" />
+
+
+
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>
+

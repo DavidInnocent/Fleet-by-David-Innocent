@@ -1,4 +1,4 @@
-package ke.co.ximmoz.fleet.views.Utils;
+package co.ke.ximmoz.commons.utils;
 
 public enum ConsignmentStatus {
 
@@ -6,5 +6,4 @@ public enum ConsignmentStatus {
     PENDING_PICKUP,
     IN_TRANSIT,
     ARRIVED
-
 }

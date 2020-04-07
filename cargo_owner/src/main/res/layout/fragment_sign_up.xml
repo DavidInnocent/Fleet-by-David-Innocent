@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +11,9 @@
         tools:context=".SignUpFragment">
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="329dp"
             android:layout_height="wrap_content"
@@ -26,9 +30,9 @@
                 android:paddingLeft="20.7dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="624dp"
-                    android:background="@drawable/white_cueve_bg" />
+                    android:background="@drawable/rounded_blue" />
 
 
                 <LinearLayout
@@ -45,7 +49,7 @@
                         android:layout_marginTop="27.7dp"
                         android:text="SIGN UP"
                         android:layout_gravity="center"
-                        android:textColor="#030303"
+                        android:textColor="@color/red"
                         android:textSize="31.3sp" />
 
                     <TextView
@@ -53,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="35dp"
                         android:text="Username"
-                        android:textColor="#c2c2c2"
+                        android:textColor="@color/white"
                         android:textSize="13.3sp" />
 
                     <EditText
@@ -63,7 +67,7 @@
                         android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
                         android:maxLines="1"
-
+                        android:textColor="@color/white"
                         android:textCursorDrawable="@drawable/grey_cursor_color"
                         android:textSize="15sp" />
 
@@ -79,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:text="Email"
-                        android:textColor="#c2c2c2"
+                        android:textColor="@color/white"
                         android:textSize="13.3sp" />
 
                     <EditText
@@ -89,7 +93,7 @@
                         android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
                         android:maxLines="1"
-
+                        android:textColor="@color/white"
                         android:inputType="textEmailAddress"
                         android:textCursorDrawable="@drawable/grey_cursor_color"
                         android:textSize="15sp" />
@@ -106,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:text="Phone Number"
-                        android:textColor="#c2c2c2"
+                        android:textColor="@color/white"
                         android:textSize="13.3sp" />
 
                     <EditText
@@ -117,7 +121,7 @@
                         android:background="@android:color/transparent"
                         android:maxLines="1"
                         android:inputType="phone"
-
+                        android:textColor="@color/white"
                         android:textCursorDrawable="@drawable/grey_cursor_color"
                         android:textSize="15sp" />
 
@@ -134,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20.3dp"
                         android:text="Password"
-                        android:textColor="#c2c2c2"
+                        android:textColor="@color/white"
                         android:textSize="13.3sp" />
 
                     <EditText
@@ -146,7 +150,7 @@
                         android:inputType="textPassword"
                         android:maxLength="10"
                         android:maxLines="1"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:textColorHint="#000000"
                         android:paddingRight="44.3dp"
                         android:textCursorDrawable="@drawable/grey_cursor_color"
@@ -163,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20.3dp"
                         android:text="Retype Password"
-                        android:textColor="#c2c2c2"
+                        android:textColor="@color/white"
                         android:textSize="13.3sp" />
 
                     <EditText
@@ -175,7 +179,7 @@
                         android:inputType="textPassword"
                         android:maxLength="10"
                         android:maxLines="1"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:textColorHint="#000000"
                         android:paddingRight="44.3dp"
                         android:textCursorDrawable="@drawable/grey_cursor_color"
@@ -212,9 +216,11 @@
 
 
                         <ImageView
+                            android:padding="20dp"
                             android:id="@+id/finish_sign_up"
-                            android:layout_width="28.7dp"
-                            android:layout_height="25.3dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/button_background_green"
                             android:src="@drawable/black_arrow" />
 
                     </LinearLayout>
@@ -226,12 +232,11 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
-            android:orientation="vertical"/>
+    </ScrollView>
+
+
 
     </RelativeLayout>
+
+
 

@@ -23,14 +23,14 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="380dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="20.7dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="344dp"
-                    android:background="@drawable/white_cueve_bg" />
+                    android:background="@drawable/rounded_blue" />
 
 
                 <LinearLayout
@@ -47,7 +47,7 @@
                         android:layout_marginTop="27.7dp"
                         android:layout_gravity="center"
                         android:text="LOGIN"
-                        android:textColor="#030303"
+                        android:textColor="@color/red"
                         android:textSize="31.3sp" />
 
                     <TextView
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:text="Email"
-                        android:textColor="#c2c2c2"
+                        android:textColor="@color/white"
                         android:textSize="13.3sp" />
 
                     <EditText
@@ -65,6 +65,7 @@
                         android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
                         android:maxLines="1"
+                        android:textColor="@color/white"
                         android:textCursorDrawable="@drawable/grey_cursor_color"
                         android:textSize="15sp" />
 
@@ -81,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20.3dp"
                         android:text="Password"
-                        android:textColor="#c2c2c2"
+                        android:textColor="@color/white"
                         android:textSize="13.3sp" />
 
                     <EditText
@@ -93,7 +94,7 @@
                         android:inputType="textPassword"
                         android:maxLength="10"
                         android:maxLines="1"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:textColorHint="#000000"
                         android:paddingRight="44.3dp"
                         android:textCursorDrawable="@drawable/grey_cursor_color"
@@ -115,7 +116,7 @@
                         android:layout_marginTop="17.3dp"
                         android:layout_marginRight="44.3dp"
                         android:text="Forgot Password?"
-                        android:textColor="#d5d5d5"
+                        android:textColor="@color/red"
                         android:textSize="12.3sp" />
 
 
@@ -148,6 +149,7 @@
                             android:id="@+id/login_to_dashboard"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:background="@drawable/button_background_green"
                             android:src="@drawable/black_arrow" />
 
                     </LinearLayout>
@@ -158,8 +160,7 @@
 
         </LinearLayout>
 
-
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

@@ -66,10 +66,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import ke.co.ximmoz.fleet.models.Consignment;
+
+import co.ke.ximmoz.commons.models.Consignment;
+import co.ke.ximmoz.commons.utils.ConsignmentStatus;
 import ke.co.ximmoz.fleet.R;
 import ke.co.ximmoz.fleet.viewmodels.ConsignmentViewmodel;
-import ke.co.ximmoz.fleet.views.Utils.ConsignmentStatus;
+
 import ke.co.ximmoz.fleet.views.Utils.DatePickerFrag;
 
 import static ke.co.ximmoz.fleet.views.FleetRequestsActivity.hasPermissions;
@@ -387,7 +389,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
                         .setCancelable(false)
                         .setMessage("Proceeding to payment")
                         .setPositiveButton("Okay", (dialog,which)-> {
-                            consignmentFinal.setStatus(ConsignmentStatus.PENDING_PAYMENT);
+                            consignmentFinal.setStatus(ConsignmentStatus.PENDING_PAYMENT.name());
                             consignmentFinal.setOwner(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             consignmentViewmodel.SaveConsignment().observe(DestinationChooserActivity.this, new Observer<String>() {
                                 @Override
@@ -401,7 +403,7 @@ public class DestinationChooserActivity extends FragmentActivity implements OnMa
 
                         })
                         .setNegativeButton("Not Now", (dialog,which)-> {
-                                consignmentFinal.setStatus(ConsignmentStatus.PENDING_PAYMENT);
+                                consignmentFinal.setStatus(ConsignmentStatus.PENDING_PAYMENT.name());
                             consignmentViewmodel.SaveConsignment().observe(DestinationChooserActivity.this, new Observer<String>() {
                                 @Override
                                 public void onChanged(String s) {

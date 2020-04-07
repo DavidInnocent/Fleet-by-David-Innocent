@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cargo_navigation"
+    app:startDestination="@id/truckSplashFragment">
+
+
+
+    <fragment
+        android:id="@+id/truckSplashFragment"
+        android:name="ke.co.ximmoz.cargotruck.views.TruckSplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_truckSplashFragment_to_truckLoginFragment"
+            app:destination="@id/truckLoginFragment" />
+        <action
+            android:id="@+id/action_truckSplashFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/truckLoginFragment"
+        android:name="ke.co.ximmoz.cargotruck.views.TruckLoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_truckLoginFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="ke.co.ximmoz.cargotruck.views.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_consignmentsFragment"
+            app:destination="@id/consignmentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/consignmentsFragment"
+        android:name="ke.co.ximmoz.cargotruck.views.ConsignmentsFragment"
+        android:label="ConsignmentsFragment" >
+        <action
+            android:id="@+id/action_consignmentsFragment_to_truckMapsFragment"
+            app:destination="@id/truckMapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/billofLaddingFragment"
+        android:name="ke.co.ximmoz.cargotruck.views.BillofLaddingFragment"
+        android:label="fragment_billof_ladding"
+        tools:layout="@layout/fragment_billof_ladding" >
+        <argument
+            android:name="Consignment"
+            app:argType="co.ke.ximmoz.commons.models.Consignment" />
+    </fragment>
+    <fragment
+        android:id="@+id/truckMapsFragment"
+        android:name="ke.co.ximmoz.cargotruck.views.TruckMapsFragment"
+        android:label="TruckMapsFragment" >
+        <action
+            android:id="@+id/action_truckMapsFragment_to_billofLaddingFragment"
+            app:destination="@id/billofLaddingFragment" />
+        <argument
+            android:name="Consignment"
+            app:argType="co.ke.ximmoz.commons.models.Consignment" />
+    </fragment>
+</navigation>

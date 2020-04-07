@@ -6,180 +6,192 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/red"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:orientation="vertical"
         tools:context=".ConsignmentFragment">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
 
-        <LinearLayout
-            android:layout_width="329dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15.7dp"
-            android:layout_marginTop="30dp"
-            android:gravity="center_vertical"
-            android:layout_marginRight="15.7dp"
-            android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="590dp"
+            android:orientation="vertical"
+            >
 
-
-            <FrameLayout
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="590dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_blue" />
+
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="20.7dp">
 
-                <ImageView
+
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="590dp"
-                    android:background="@drawable/white_cueve_bg" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="27.7dp"
+                    android:layout_gravity="center"
+                    android:text="Consignment Editor"
+                    android:textColor="@color/red"
+                    android:textSize="31.3sp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Pickup Location"
+                    android:textColor="@color/white"
+                    android:textSize="13.3sp" />
 
-                <LinearLayout
-                    android:id="@+id/linear"
+                <fragment android:id="@+id/autocomplete_fragment_delivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="20.7dp">
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="27.7dp"
-                        android:layout_gravity="center"
-                        android:text="Consignment Details"
-                        android:textColor="#030303"
-                        android:textSize="21.3sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
-                        android:text="Pickup Location"
-                        android:textColor="#c2c2c2"
-                        android:textSize="13.3sp" />
-
-                    <fragment android:id="@+id/autocomplete_fragment_delivery"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                        />
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginRight="44.3dp"
+                    android:background="#d5d5d5" />
 
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="6.3dp"
-                        android:layout_marginRight="44.3dp"
-                        android:background="#d5d5d5" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20.3dp"
+                    android:text="Destination"
+                    android:textColor="@color/white"
+                    android:textSize="13.3sp" />
+
+                <fragment android:id="@+id/autocomplete_fragment_destination"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginRight="44.3dp"
+                    android:background="#d5d5d5" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20.3dp"
-                        android:text="Destination"
-                        android:textColor="#c2c2c2"
-                        android:textSize="13.3sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20.3dp"
+                    android:text="Container Size"
+                    android:textColor="@color/white"
+                    android:textSize="13.3sp" />
 
-                    <fragment android:id="@+id/autocomplete_fragment_destination"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                        />
+                <Spinner
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="This is the one"
+                    android:layout_marginTop="16dp"
+                    android:spinnerMode="dialog"
+                    android:background="@android:color/transparent"
+                    android:textCursorDrawable="@drawable/grey_cursor_color"
+                    android:textSize="15sp" />
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="6.3dp"
-                        android:layout_marginRight="44.3dp"
-                        android:background="#d5d5d5" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20.3dp"
-                        android:text="Container Size"
-                        android:textColor="#c2c2c2"
-                        android:textSize="13.3sp" />
-
-                    <Spinner
-                        android:id="@+id/container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="This is the one"
-                        android:layout_marginTop="16dp"
-                        android:spinnerMode="dialog"
-                        android:background="@android:color/transparent"
-                        android:textCursorDrawable="@drawable/grey_cursor_color"
-                        android:textSize="15sp" />
-
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="6.3dp"
-                        android:layout_marginRight="44.3dp"
-                        android:background="#d5d5d5" />
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginRight="44.3dp"
+                    android:background="#d5d5d5" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20.3dp"
-                        android:text="Pickup Date"
-                        android:textColor="#c2c2c2"
-                        android:textSize="13.3sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20.3dp"
+                    android:text="Pickup Date"
+                    android:textColor="@color/white"
+                    android:textSize="13.3sp" />
 
-                    <TextView
-                        android:id="@+id/date_of_pickup"
-                        android:layout_width="match_parent"
-                        android:textSize="13.3sp"
-                        android:layout_height="30dp"/>
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="6.3dp"
-                        android:layout_marginRight="44.3dp"
-                        android:background="#d5d5d5" />
+                <TextView
+                    android:id="@+id/date_of_pickup"
+                    android:layout_width="match_parent"
+                    android:textSize="13.3sp"
+                    android:textColor="@color/red"
+                    android:layout_height="30dp"/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginRight="44.3dp"
+                    android:background="#d5d5d5" />
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:paddingLeft="30dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <ImageView
+                        android:padding="20dp"
+                        android:id="@+id/to_payment"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/button_background_green"
+                        android:src="@drawable/black_arrow" />
 
 
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="bottom"
-                    android:paddingLeft="30dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"/>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:gravity="center"
-                        android:orientation="vertical">
+            </LinearLayout>
+        </FrameLayout>
 
 
-                        <ImageView
-                            android:id="@+id/to_payment"
-                            android:layout_width="28.7dp"
-                            android:layout_height="25.3dp"
-                            android:src="@drawable/black_arrow" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </FrameLayout>
+    </LinearLayout>
+</ScrollView>
 
 
-        </LinearLayout>
 
-
+<include layout="@layout/progress_dialog"
+    android:visibility="gone"
+    android:id="@+id/progress_dialog"/>
     </RelativeLayout>
 

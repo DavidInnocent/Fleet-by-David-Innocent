@@ -14,24 +14,26 @@ import android.location.Location;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 import ke.co.ximmoz.fleet.models.LocationObject;
 import ke.co.ximmoz.fleet.R;
 
-public class TrackerService extends Service {
+public class TrackerService extends Service implements LifecycleOwner {
     private static final String CHANNEL_ID = "Tracking LocationObject";
     private String consignmentID;
 
@@ -47,8 +49,9 @@ public class TrackerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        this.consignmentID=intent.getStringExtra("ConsignmentID");
         super.onStartCommand(intent, flags, startId);
+        Bundle bundle=intent.getExtras();
+        consignmentID=intent.getStringExtra("Consignment");
         return START_NOT_STICKY;
     }
 
@@ -59,21 +62,6 @@ public class TrackerService extends Service {
     }
 
     private void buildNotification() {
-//        String stop = "stop";
-//        registerReceiver(stopReceiver, new IntentFilter(stop));
-//        PendingIntent broadcastIntent = PendingIntent.getBroadcast(
-//                this, 0, new Intent(stop), PendingIntent.FLAG_UPDATE_CURRENT);
-//        // Create the persistent notification
-//
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID)
-//                .setContentTitle(getString(R.string.app_name))
-//                .setContentText("Tracking Enabled")
-//                .setOngoing(true)
-//                .setContentIntent(broadcastIntent)
-//                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setSmallIcon(R.drawable.ic_map_marker);
-//        startForeground(1, builder.build());
-
 
         NotificationManager mNotificationManager;
 
@@ -98,14 +86,11 @@ public class TrackerService extends Service {
         mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-// === Removed some obsoletes
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelId = "Firefy Channel";
             NotificationChannel channel = new NotificationChannel(channelId,"Firefy notifications",NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("Firefy notifications keeps  you in the loop.");
             mNotificationManager.createNotificationChannel(channel);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             mNotificationManager.createNotificationChannel(channel);
             mBuilder.setChannelId(channelId);
         }
@@ -124,7 +109,7 @@ public class TrackerService extends Service {
     };
 
     private void loginToFirebase() {
-        requestLocationUpdates(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        requestLocationUpdates(consignmentID);
     }
 
     private void requestLocationUpdates(String uid) {
@@ -142,19 +127,25 @@ public class TrackerService extends Service {
             client.requestLocationUpdates(request, new LocationCallback() {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tracking");
+
                     Location location = locationResult.getLastLocation();
                     if (location != null) {
                         LocationObject locationObject=new LocationObject();
                         locationObject.setLatitude(location.getLatitude());
                         locationObject.setLongitude(location.getLongitude());
                         locationObject.setTruckID(uid);
-
-
-                        ref.child(consignmentID).setValue(locationObject);
+//                        locationViewmodel.SetLocationOfTruck(locationObject).observeForever(s -> {
+//                            Toast.makeText(TrackerService.this, s, Toast.LENGTH_SHORT).show();
+//                        });
                     }
                 }
             }, null);
         }
+    }
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return this.getLifecycle();
     }
 }

@@ -3,7 +3,8 @@ package ke.co.ximmoz.fleet.views.Utils;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
+
 
 public class Marker implements ClusterItem {
 

@@ -29,7 +29,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="444dp"
-                    android:background="@drawable/white_cueve_bg" />
+                    android:background="@drawable/fleet_background" />
 
 
                 <LinearLayout
@@ -46,7 +46,7 @@
                         android:layout_marginTop="27.7dp"
                         android:layout_gravity="center"
                         android:text="Payments"
-                        android:textColor="#030303"
+                        android:textColor="@color/red"
                         android:textSize="31.3sp" />
 
 
@@ -258,9 +258,11 @@
 
 
                         <ImageView
+                            android:padding="20dp"
                             android:id="@+id/login"
-                            android:layout_width="28.7dp"
-                            android:layout_height="25.3dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/button_background_green"
                             android:src="@drawable/black_arrow" />
 
                     </LinearLayout>

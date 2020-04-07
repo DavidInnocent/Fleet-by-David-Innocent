@@ -1,18 +1,17 @@
-package ke.co.ximmoz.fleet.models;
+package co.ke.ximmoz.commons.models;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.io.Serializable;
 
-import ke.co.ximmoz.fleet.views.Utils.ConsignmentStatus;
 
 
 public class Consignment implements Serializable {
     String id;
     String container_size;
     String amount;
-    ConsignmentStatus status;
+    String status;
     String owner;
     String driver;
     String date_of_pickup;
@@ -20,20 +19,32 @@ public class Consignment implements Serializable {
     String distance;
     String destinationAddress;
     String destinationName;
+    String consignmentBillOfLadding;
     double destinationLat;
     double destinationLng;
     String pickupAddress;
     String pickupName;
     double pickupLat;
     double pickupLng;
+    int consignmentTransactionNumber;
 
+    public String getConsignmentBillOfLadding() {
+        return consignmentBillOfLadding;
+    }
 
+    public void setConsignmentBillOfLadding(String consignmentBillOfLadding) {
+        this.consignmentBillOfLadding = consignmentBillOfLadding;
+    }
+
+    public int getConsignmentTransactionNumber() {
+        return consignmentTransactionNumber;
+    }
 
     @ServerTimestamp
-    Timestamp pickupTime;
+    public transient Timestamp pickupTime;
 
     @ServerTimestamp
-    Timestamp arrivalTime;
+    public transient Timestamp arrivalTime;
 
 
     public Timestamp getPickupTime() {
@@ -76,11 +87,11 @@ public class Consignment implements Serializable {
         this.amount = amount;
     }
 
-    public ConsignmentStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(ConsignmentStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

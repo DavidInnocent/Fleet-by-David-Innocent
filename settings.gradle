@@ -1,3 +1,4 @@
+include ':commons'
 include ':cargo_owner'
 rootProject.name='fleet'
 include ':cargotruck'

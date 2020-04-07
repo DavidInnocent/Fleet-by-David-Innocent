@@ -21,7 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import ke.co.ximmoz.fleet.models.Consignment;
+
+import co.ke.ximmoz.commons.models.Consignment;
+import co.ke.ximmoz.commons.utils.ConsignmentStatus;
 import ke.co.ximmoz.fleet.R;
 import ke.co.ximmoz.fleet.viewmodels.ConsignmentViewmodel;
 import ke.co.ximmoz.fleet.views.LocationUpdateService;
@@ -62,7 +64,7 @@ public class ConsignmentDialog extends DialogFragment {
 
     private void confirmPickup(Consignment consignment)
     {
-        consignment.setStatus(ConsignmentStatus.IN_TRANSIT);
+        consignment.setStatus(ConsignmentStatus.IN_TRANSIT.name());
         consignment.setDriver(FirebaseAuth.getInstance().getCurrentUser().getUid());
         consignmentViewmodel.UpdateConsignment(consignment).observe(getViewLifecycleOwner(), consignmentt-> {
 

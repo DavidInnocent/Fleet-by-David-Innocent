@@ -6,23 +6,20 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
+
 
 public class ConsignmentFragmentDialog extends DialogFragment {
 
@@ -43,15 +40,16 @@ public class ConsignmentFragmentDialog extends DialogFragment {
     TextView grand_total;
 
 
-    @OnClick(R.id.close) void Dismmiss(){
+    @OnClick(R.id.finish_sign_up) void Dismmiss(){
         getDialog().dismiss();
-        navController.navigate(ConsignmentFragmentDialogDirections.actionSampleFragmentDialogToDashboardFragment());
+        navController.navigate(ConsignmentFragmentDialogDirections.actionSampleFragmentDialogToConsignmentsHistoryFragment());
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -62,6 +60,7 @@ public class ConsignmentFragmentDialog extends DialogFragment {
         unbinder= ButterKnife.bind(this,view);
         navController= NavHostFragment.findNavController(this);
         getDialog().requestWindowFeature(STYLE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         setCancelable(false);
         return view;
 
@@ -82,7 +81,7 @@ public class ConsignmentFragmentDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Dialog dialog=super.onCreateDialog(savedInstanceState);
         dialog.getWindow().setGravity(Gravity.NO_GRAVITY);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.black);
         return dialog;
     }
 

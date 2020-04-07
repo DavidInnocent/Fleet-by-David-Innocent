@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "347829116347",
+    "firebase_url": "https://fleet-a1cbd.firebaseio.com",
+    "project_id": "fleet-a1cbd",
+    "storage_bucket": "fleet-a1cbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347829116347:android:b1f0cd88178a98b078789e",
+        "android_client_info": {
+          "package_name": "ke.co.ximmoz.cargotruck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347829116347-k9sles9gif233npjhj355f6cn9ko7817.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ke.co.ximmoz.cargotruck",
+            "certificate_hash": "da31b96dbd6b1204e3ed971f3c78daffd384e021"
+          }
+        },
+        {
+          "client_id": "347829116347-c1fdi20m04hhbk8mmptaclqm3tciimab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo4ybgtFNqIeeMkV7711Q-fePAIcW8O-A"
+        },
+        {
+          "current_key": "AIzaSyC-4tSYAvMf-TlFTQme-qyG76i1_yioPGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347829116347-c1fdi20m04hhbk8mmptaclqm3tciimab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347829116347:android:3919f03a361cdb5778789e",
+        "android_client_info": {
+          "package_name": "ke.co.ximmoz.fleet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347829116347-u2vu0chnlu76nbqskpvh773fqeaeri6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ke.co.ximmoz.fleet",
+            "certificate_hash": "da31b96dbd6b1204e3ed971f3c78daffd384e021"
+          }
+        },
+        {
+          "client_id": "347829116347-9bijp4it5kuu7rniuipu7mhgnlcfdosp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ke.co.ximmoz.fleet",
+            "certificate_hash": "252ae258c2860239aa618d54f5de6479e677ae32"
+          }
+        },
+        {
+          "client_id": "347829116347-c1fdi20m04hhbk8mmptaclqm3tciimab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo4ybgtFNqIeeMkV7711Q-fePAIcW8O-A"
+        },
+        {
+          "current_key": "AIzaSyC-4tSYAvMf-TlFTQme-qyG76i1_yioPGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347829116347-c1fdi20m04hhbk8mmptaclqm3tciimab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

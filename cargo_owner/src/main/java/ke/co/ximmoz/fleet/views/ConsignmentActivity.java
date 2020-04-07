@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
 import ke.co.ximmoz.fleet.R;
 
 public class ConsignmentActivity extends AppCompatActivity {

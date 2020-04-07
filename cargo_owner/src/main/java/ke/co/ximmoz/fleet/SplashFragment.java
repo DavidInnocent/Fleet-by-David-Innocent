@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,7 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.labo.kaji.fragmentanimations.CubeAnimation;
@@ -48,6 +54,7 @@ public class SplashFragment extends Fragment {
     private Unbinder unbinder;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private NavController navController;
 
 
     public SplashFragment() {
@@ -90,32 +97,13 @@ public class SplashFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_splash,container,false);
         unbinder= ButterKnife.bind(this,view);
+         navController= Navigation.findNavController(container);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NavController navController= Navigation.findNavController(view);
-        new Handler().postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if(currentUser==null)
-                {
-
-                    navController.navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment());
-
-                }
-                else{
-                    navController.navigate(SplashFragmentDirections.actionSplashFragmentToDashboardFragment());
-                }
-
-            }
-        }, 3000);
-
-
     }
 
 
@@ -125,6 +113,43 @@ public class SplashFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
+        new Handler().postDelayed(() -> {
+            if(currentUser==null)
+            {
+
+                navController.navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment());
+
+            }
+            else{
+
+                navController.navigate(SplashFragmentDirections.actionSplashFragmentToDashboardFragment());
+//                if(currentUser.isEmailVerified())
+//                {
+//                    navController.navigate(SplashFragmentDirections.actionSplashFragmentToDashboardFragment());
+//                }
+//                else
+//                {
+////
+//                  currentUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                      @Override
+//                      public void onSuccess(Void aVoid) {
+//                          Toast.makeText(getActivity(), "DOne", Toast.LENGTH_SHORT).show();
+//                      }
+//                  }).addOnFailureListener(new OnFailureListener() {
+//                      @Override
+//                      public void onFailure(@NonNull Exception e) {
+//                          Toast.makeText(getActivity(), "Faile", Toast.LENGTH_SHORT).show();
+//                      }
+//                  });
+//
+//                }
+
+            }
+
+        }, 3000);
+
 
     }
 

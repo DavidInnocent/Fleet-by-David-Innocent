@@ -2,20 +2,16 @@ package ke.co.ximmoz.fleet.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import ke.co.ximmoz.fleet.models.Consignment;
+import co.ke.ximmoz.commons.models.Consignment;
 import ke.co.ximmoz.fleet.R;
 import ke.co.ximmoz.fleet.viewmodels.ConsignmentViewmodel;
 import ke.co.ximmoz.fleet.views.Utils.ConsignmentAdapter;
@@ -36,38 +32,38 @@ public class ConsignmentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_consignments);
         ButterKnife.bind(this);  
         consignmentViewmodel= ViewModelProviders.of(this).get(ConsignmentViewmodel.class);
-        consignmentViewmodel.GetConsignments().observe(this, consignments ->
-        {
-
-
-            if(consignments.size()>0)
-            {
-
-                RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
-                adapter = new ConsignmentAdapter(this, consignments);
-                consignmentRecyclerView.setLayoutManager(layoutManager);
-                consignmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                RecyclerView.ItemDecoration divider= new DividerItemDecoration(this,DividerItemDecoration.HORIZONTAL);
-                consignmentRecyclerView.addItemDecoration(divider);
-                consignmentRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-
-            }
-            else
-            {
-                Toast.makeText(this, "Failedddddd", Toast.LENGTH_SHORT).show();
-
-//                for (Consignment consign :
-//                        consignments) {
-//                    consignmentsList.add(consign);
+//        consignmentViewmodel.GetConsignments().observe(this, consignments ->
+//        {
 //
-//                }
 //
+//            if(consignments.size()>0)
+//            {
+//
+//                RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+//                adapter = new ConsignmentAdapter(this, consignments);
+//                consignmentRecyclerView.setLayoutManager(layoutManager);
+//                consignmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//                RecyclerView.ItemDecoration divider= new DividerItemDecoration(this,DividerItemDecoration.HORIZONTAL);
+//                consignmentRecyclerView.addItemDecoration(divider);
+//                consignmentRecyclerView.setAdapter(adapter);
 //                adapter.notifyDataSetChanged();
-            }
-
-
-        });
+//
+//            }
+//            else
+//            {
+//                Toast.makeText(this, "Failedddddd", Toast.LENGTH_SHORT).show();
+//
+////                for (Consignment consign :
+////                        consignments) {
+////                    consignmentsList.add(consign);
+////
+////                }
+////
+////                adapter.notifyDataSetChanged();
+//            }
+//
+//
+//        });
 
 
 

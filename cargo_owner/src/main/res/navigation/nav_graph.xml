@@ -48,6 +48,9 @@
             app:popUpToInclusive="true"
             app:destination="@id/sampleFragmentDialog"
             app:popUpTo="@id/consignmentFragment" />
+        <action
+            android:id="@+id/action_consignmentFragment_to_fileChooserFragment"
+            app:destination="@id/fileChooserFragment" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
@@ -85,18 +88,68 @@
         android:id="@+id/consignmentsHistoryFragment"
         android:name="ke.co.ximmoz.fleet.ConsignmentsHistoryFragment"
         android:label="fragment_consignments_history"
-        tools:layout="@layout/fragment_consignments_history" />
+        tools:layout="@layout/fragment_consignments_history" >
+        <action
+            android:id="@+id/action_consignmentsHistoryFragment_to_orderDialogFragment"
+            app:destination="@id/orderDialogFragment" />
+        <action
+            android:id="@+id/action_consignmentsHistoryFragment_to_truckMapsFragment"
+            app:destination="@id/truckMapsFragment" />
+    </fragment>
     <dialog
         android:id="@+id/sampleFragmentDialog"
         android:name="ke.co.ximmoz.fleet.ConsignmentFragmentDialog"
         android:label="SampleFragmentDialog"
         >
+        <argument
+            android:name="Consignment"
+            app:argType="co.ke.ximmoz.commons.models.Consignment" />
+        <action
+            android:id="@+id/action_sampleFragmentDialog_to_consignmentsHistoryFragment"
+            app:destination="@id/consignmentsHistoryFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/orderDialogFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="ke.co.ximmoz.fleet.OrderDialogFragment"
+        android:label="fragment_order_dialog"
+        tools:layout="@layout/fragment_order_dialog">
         <action
             android:id="@+id/action_sampleFragmentDialog_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             />
         <argument
             android:name="Consignment"
-            app:argType="ke.co.ximmoz.fleet.models.Consignment" />
-    </dialog>
+            app:argType="co.ke.ximmoz.commons.models.Consignment" />
+        <action
+            android:id="@+id/action_orderDialogFragment_to_bankDetailsFragment"
+            app:destination="@id/bankDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/truckMapsFragment"
+        android:name="ke.co.ximmoz.fleet.TruckMapsFragment"
+        android:label="fragment_truck_maps"
+        tools:layout="@layout/fragment_truck_maps">
+        <argument android:name="consignment"
+            app:argType="co.ke.ximmoz.commons.models.Consignment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/bankDetailsFragment"
+        android:name="ke.co.ximmoz.fleet.BankDetailsFragment"
+        android:label="fragment_bank_details"
+        tools:layout="@layout/fragment_bank_details" >
+        <argument
+            android:name="ConsignmentDetails"
+            app:argType="co.ke.ximmoz.commons.models.Consignment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fileChooserFragment"
+        android:name="ke.co.ximmoz.fleet.FileChooserFragment"
+        android:label="fragment_file_chooser"
+        tools:layout="@layout/fragment_file_chooser" >
+        <argument
+            android:name="Consignment"
+            app:argType="co.ke.ximmoz.commons.models.Consignment" />
+    </fragment>
 </navigation>

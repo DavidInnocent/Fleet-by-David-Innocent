@@ -8,12 +8,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-import ke.co.ximmoz.fleet.models.Consignment;
+
+import co.ke.ximmoz.commons.models.Consignment;
+import co.ke.ximmoz.commons.utils.ConsignmentStatus;
 import ke.co.ximmoz.fleet.repositories.ConsignmentRepository;
-import ke.co.ximmoz.fleet.views.Utils.ConsignmentStatus;
+
 
 public class ConsignmentViewmodel extends AndroidViewModel {
     public Consignment consignment;
@@ -30,18 +33,21 @@ public class ConsignmentViewmodel extends AndroidViewModel {
     public LiveData<String> SaveConsignment()
     {
 
-        consignment.setStatus(ConsignmentStatus.PENDING_PAYMENT);
-        String number  = consignment.getDistance().replaceAll("[^0-9]", "");
-        int distanceBetweenPickupAndDestination=Integer.parseInt(number);
-        int finalAmountDue=(distanceBetweenPickupAndDestination*ratePerKm)+transactionCharge;
+        consignment.setStatus(ConsignmentStatus.PENDING_PAYMENT.name());
+        String number  = consignment.getDistance();
+        String stripedValue = (number.replaceAll("[\\s+a-zA-Z : ,]",""));
+        double dbl = Double.parseDouble(stripedValue);
+        double finalAmountDue=(dbl*ratePerKm)+transactionCharge;
         consignment.setAmount(String.valueOf(finalAmountDue));
         consignment.setOwner(FirebaseAuth.getInstance().getCurrentUser().getUid());
         return consignmentRepository.SaveConsignment(consignment);
+
+
     }
-    public MutableLiveData<List<Consignment>> GetConsignments()
-    {
-        return consignmentRepository.GetConsignments();
-    }
+//    public MutableLiveData<List<Consignment>> GetConsignments()
+//    {
+////        return consignmentRepository.GetConsignments();
+//    }
 
     public LiveData<Consignment> UpdateConsignment(Consignment consignment) {
         return consignmentRepository.UpdateConsignment(consignment);
@@ -49,5 +55,8 @@ public class ConsignmentViewmodel extends AndroidViewModel {
 
     public MutableLiveData<List<Consignment>> GetOwnerConsignments() {
         return consignmentRepository.GetOwnerConsignments();
+    }
+    public LiveData<QuerySnapshot> GetOwnerUpdatedConsignments() {
+        return consignmentRepository.UpdateOwnerConsignments();
     }
 }

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.labo.kaji.fragmentanimations.CubeAnimation;
 import com.labo.kaji.fragmentanimations.MoveAnimation;
 
@@ -32,7 +33,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.opencensus.internal.StringUtil;
 import ke.co.ximmoz.fleet.models.User;
 import ke.co.ximmoz.fleet.viewmodels.AuthViewModel;
 import ke.co.ximmoz.fleet.views.Utils.FieldsValidator;
@@ -149,6 +149,7 @@ public class SignUpFragment extends Fragment implements LifecycleOwner {
                     }
                     else
                     {
+                        FirebaseAuth.getInstance().signOut();
                         navController.navigate(SignUpFragmentDirections.actionSignUpFragmentToDashboardFragment());
                     }
                 });

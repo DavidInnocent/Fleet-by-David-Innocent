@@ -9,20 +9,24 @@
         android:orientation="vertical"
         tools:context=".DashboardFragment">
 
-
+  
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="329dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15.7dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="15.7dp"
             android:orientation="vertical">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27.7dp"
                 android:layout_gravity="center"
                 android:text="Dashboard"
+                android:textAlignment="center"
                 android:layout_marginBottom="10dp"
                 android:textColor="#030303"
                 android:textSize="31.3sp" />
@@ -30,15 +34,16 @@
             <FrameLayout
                 android:id="@+id/request_truck"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginBottom="20dp"
                 android:paddingLeft="20.7dp">
 
                 <ImageView
                     android:id="@+id/new_consignment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="244dp"
-                    android:background="@drawable/white_cueve_bg" />
+                    android:background="@drawable/rounded_blue" />
 
 
                 <LinearLayout
@@ -57,7 +62,7 @@
                         android:layout_marginTop="27.7dp"
                         android:layout_gravity="center"
                         android:text="Request Truck"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/white"
                         android:textSize="21.3sp" />
 
 
@@ -75,9 +80,9 @@
 
                 <ImageView
                     android:id="@+id/history_consignments"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="244dp"
-                    android:background="@drawable/white_cueve_bg_upside" />
+                    android:background="@drawable/rounded_blue" />
 
 
                 <LinearLayout
@@ -95,8 +100,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27.7dp"
                         android:layout_gravity="center"
-                        android:text="My Requests"
-                        android:textColor="#030303"
+                        android:text="My Consignments"
+                        android:textColor="@color/white"
                         android:textSize="21.3sp" />
 
 
@@ -107,6 +112,9 @@
             </FrameLayout>
 
         </LinearLayout>
+
+
+    </ScrollView>
 
 
     </RelativeLayout>
